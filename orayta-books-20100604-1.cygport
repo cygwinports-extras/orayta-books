@@ -1,0 +1,17 @@
+SVN_URI="http://orayta.googlecode.com/svn/"
+SVN_BRANCH="books"
+SVN_MODULE=${PN}
+inherit svn
+
+DESCRIPTION="Content for Orayta Jewish book library"
+HOMEPAGE="http://code.google.com/p/orayta/"
+
+SRC_DIR=.
+
+src_compile() { :; }
+
+src_install() {
+	cd ${S}/books
+	dodir /usr/share/Orayta/Books
+	cp -r */ 000_* ${D}/usr/share/Orayta/Books
+}
