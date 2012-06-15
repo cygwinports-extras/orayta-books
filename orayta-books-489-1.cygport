@@ -1,0 +1,41 @@
+SVN_URI="http://orayta.googlecode.com/svn/"
+SVN_BRANCH="BooksSrc"
+SVN_MODULE=${PN}
+SVN_REV=${PV}
+inherit svn xvfb
+
+DESCRIPTION="Content for Orayta Jewish book library"
+HOMEPAGE="http://code.google.com/p/orayta/"
+
+src_compile() {
+	echo "Copying sources..."
+	rm -fr ${B}/*
+	cp -r ${S}/* ${B}/
+
+	cd ${B}
+
+	create_dbs() {
+		for f in `find . -iname "*.txt"`
+		do
+		    echo "Creating DB for: "$f
+		    orayta -D $f
+		    ./genBook.sh $f
+		done
+	}
+
+	xvfb_run create_dbs
+
+	# Change folder's ".conf" files to ".folder" files
+	for f in `find . -iname "*.conf"`
+	do
+	    b=`echo $f | sed 's/[.][/]//g' | sed -e 's/[.].*//g'`
+	    echo "Creating "$b".folder"
+	    mv $f $b".folder"
+	done
+}
+
+src_install() {
+	cd ${B}
+	dodir /usr/share/Orayta/Books
+	cp -r 000_WELLCOME.obk *.folder *_*/ Pics/ ${D}/usr/share/Orayta/Books
+}
