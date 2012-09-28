@@ -1,11 +1,18 @@
+NAME="orayta-books"
+VERSION=543
+RELEASE=1
+CATEGORY="Religion"
+SUMMARY="Jewish book library (content)"
+DESCRIPTION="Orayta ('Torah' in Aramaic), intends to give simple access to as
+many Jewish sources as possible, from the Bible, Mishna and Talmud, to books
+written in the last years, freely and off-line. This project is based on the
+great 'Torah Emet' project, but is developed seperately."
+HOMEPAGE="http://code.google.com/p/orayta/"
 SVN_URI="http://orayta.googlecode.com/svn/"
 SVN_BRANCH="BooksSrc"
-SVN_MODULE=${PN}
-SVN_REV=${PV}
+SVN_MODULE=${NAME}
+SVN_REV=${VERSION}
 inherit svn xvfb
-
-DESCRIPTION="Content for Orayta Jewish book library"
-HOMEPAGE="http://code.google.com/p/orayta/"
 
 src_compile() {
 	echo "Copying sources..."
